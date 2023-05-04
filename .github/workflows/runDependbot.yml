@@ -17,4 +17,4 @@ jobs:
       - name: Setup Dependabot
         uses: dependabot/dependabot-action@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.patrice }}

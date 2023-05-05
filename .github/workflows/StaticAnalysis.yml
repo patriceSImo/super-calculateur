@@ -1,4 +1,4 @@
-name: Static Analysis
+name: Multiworks
 
 on:
   pull_request:

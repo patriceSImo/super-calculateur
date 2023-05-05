@@ -13,7 +13,7 @@ jobs:
 
       - name: Static code analysis with Semgrep
         uses: returntocorp/semgrep-action@v1.5.0
-          with:
+        with:
           config: 'p/default'
 
       - name: Lint Dockerfile with Hadolint

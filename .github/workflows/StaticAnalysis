@@ -1,0 +1,29 @@
+name: Static Analysis
+
+on:
+  pull_request:
+  push:
+    tags:
+      - '*'
+  workflow_dispatch:
+
+jobs:
+  static-analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Static code analysis with Semgrep
+        uses: returntocorp/semgrep-action@v1.5.0
+
+      - name: Lint Dockerfile with Hadolint
+        uses: hadolint/hadolint-action@v1.0.0
+        with:
+          files: Dockerfile
+          
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.DOCKER_USER_NAME }}/super_calculator:${{ github.ref_name }}

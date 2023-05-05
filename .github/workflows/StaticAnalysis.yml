@@ -1,4 +1,4 @@
-name: Multiworks
+name: Lint Workflow
 
 on:
   pull_request:
@@ -6,23 +6,26 @@ on:
   workflow_dispatch:
 
 jobs:
-  static-analysis:
+  Lint:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Static code analysis with Semgrep
-        uses: returntocorp/semgrep-action@v1.5.0
-        with:
-          config: 'p/default'
+    - name: Static analysis with Semgrep
+      uses: returntocorp/semgrep-action@v1
+      with:
+       config: "p/default"
 
-      - name: Lint Dockerfile with Hadolint
-        uses: hadolint/hadolint-action@v1.0.0
-        with:
-          files: Dockerfile
-          
-       - name: Super-Linter
-       if: ${{ github.event_name == 'pull_request' }}
-       uses: github/super-linter@v4
-       with:
-       config: 'p/default'
+    - name: Dockerfile Analysis with Hadolint
+      uses: hadolint/hadolint-action@v3.1.0
+      with:
+       dockerfile: Dockerfile
+
+    - name: Super linter on Pull Request
+      if: ${{ github.event_name == 'pull_request' }}
+      uses: github/super-linter/slim@v5
+      env:
+        VALIDATE_ALL_CODEBASE: true
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 

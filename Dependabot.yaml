@@ -1,5 +1,4 @@
-# Configuration pour Go
----
+
 version: 2
 updates:
   - package-ecosystem: "gomod"
@@ -12,8 +11,6 @@ updates:
 
  
 
-# Configuration pour Docker
----
 version: 2
 updates:
   - package-ecosystem: "docker"
